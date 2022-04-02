@@ -14,7 +14,6 @@ function Layout() {
       <Menu />
       <div className="container">
         <Switch>
-
           <Route path="/observations/new">
             <ObservationCreate />
           </Route>
