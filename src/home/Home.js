@@ -14,6 +14,7 @@ function Home() {
     return () => abortController.abort();
   }, []);
 
+
   const tableRows = observations.map((observation) => (
     <tr key={observation.observation_id}>
       <th scope="row">{observation.observation_id}</th>
@@ -24,6 +25,7 @@ function Home() {
     </tr>
   ));
 
+
   return (
     <main>
       <h1>Home</h1>
@@ -31,7 +33,7 @@ function Home() {
       <table className="table">
         <thead>
           <tr>
-            <th scope="col">#</th>
+
             <th scope="col">Latitude</th>
             <th scope="col">Longitude</th>
             <th scope="col">Sky Condition</th>

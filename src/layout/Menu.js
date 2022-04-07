@@ -20,7 +20,9 @@ function Menu() {
         >
           <span className="navbar-toggler-icon" />
         </button>
+
         <div className="collapse navbar-collapse" id="navbarNav">
+
           <ul className="navbar-nav mr-auto">
             <li className={homeClass}>
               <Link className="nav-link" to="/">
@@ -28,6 +30,7 @@ function Menu() {
               </Link>
             </li>
           </ul>
+
           <ul className="navbar-nav">
             <li className="nav-item">
               <Link className="nav-link active" to="/observations/new">
@@ -36,6 +39,7 @@ function Menu() {
               </Link>
             </li>
           </ul>
+
         </div>
       </nav>
     </div>

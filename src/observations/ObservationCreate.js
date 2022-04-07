@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { createObservation } from "../utils/api";
+import ErrorAlert from "../layout/ErrorAlert";
+
 
 function ObservationCreate() {
   const history = useHistory();
+  const [error, setError] = useState(null);
 
   const [observation, setObservation] = useState({
     latitude: "",
@@ -19,12 +22,17 @@ function ObservationCreate() {
 
   function submitHandler(event) {
     event.preventDefault();
-    createObservation(observation).then(() => {
-      history.push("/");
-    });
+    createObservation(observation)
+      .then(() => {
+        history.push("/");
+      })
+      .catch(
+        setError
+      );
   }
 
   function changeHandler({ target: { name, value } }) {
+
     setObservation((previousObservation) => ({
       ...previousObservation,
       [name]: value,
@@ -34,10 +42,9 @@ function ObservationCreate() {
   return (
     <main>
       <h1 className="mb-3">Create Observation</h1>
+      <ErrorAlert error={error} />
       <form onSubmit={submitHandler} className="mb-4">
-
         <div className="row mb-3">
-
           <div className="col-6 form-group">
             <label className="form-label" htmlFor="latitude">
               Latitude
