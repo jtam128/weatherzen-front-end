@@ -33,7 +33,7 @@ function Home() {
       <table className="table">
         <thead>
           <tr>
-
+            <th scope="col">ID</th>
             <th scope="col">Latitude</th>
             <th scope="col">Longitude</th>
             <th scope="col">Sky Condition</th>
