@@ -5,7 +5,7 @@ import Menu from "./Menu";
 import { Route, Switch } from "react-router-dom";
 import Home from "../home/Home";
 import ObservationCreate from "../observations/ObservationCreate";
-
+import ObservationEdit from "../observations/ObservationEdit";
 
 function Layout() {
   return (
@@ -17,15 +17,15 @@ function Layout() {
           <Route path="/observations/new">
             <ObservationCreate />
           </Route>
-
           <Route exact={true} path="/">
             <Home />
           </Route>
-
+          <Route path='/observations/:observationId/edit'>
+            <ObservationEdit />
+          </Route>
           <Route>
             <NotFound />
           </Route>
-
         </Switch>
       </div>
     </>

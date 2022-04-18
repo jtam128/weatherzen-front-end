@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
-import { listObservations } from "../utils/api";
+import { deleteObservation, listObservations } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
+import { useHistory } from "react-router-dom";
 
 function Home() {
   const [observations, setObservations] = useState([]);
   const [error, setError] = useState(null);
+  const history = useHistory();
 
   useEffect(() => {
     const abortController = new AbortController();
@@ -14,17 +16,53 @@ function Home() {
     return () => abortController.abort();
   }, []);
 
+  async function deleteHandler(id) {
+    try
+    {
+      const result = window.confirm(
+        "Delete this observation?\n\nYou will not be able to recover it."
+      );
+      if (result)
+      {
+        await deleteObservation(id);
+        window.location.reload();
+      }
+    } catch (err)
+    {
+      setError(err);
+    }
+  }
+
+  const moment = require('moment')
 
   const tableRows = observations.map((observation) => (
-    <tr key={observation.observation_id}>
-      <th scope="row">{observation.observation_id}</th>
-      <td>{observation.latitude}</td>
-      <td>{observation.longitude}</td>
-      <td>{observation.sky_condition}</td>
-      <td>{observation.created_at}</td>
-    </tr>
+    <tr key={observation.observation_id} >
+      <th scope="row" > {observation.observation_id}</th >
+      <td>{observation.latitude}</td >
+      <td>{observation.longitude}</td >
+      <td>{observation.sky_condition}</td >
+      <td>{moment(observation.created_at).utc().format('dddd, MMMM Do YYYY | h:mm a')}</td>
+      <td>{observation.air_temperature}&#176;{observation.air_temperature_unit}</td>
+      <td>
+        <button
+          type="button"
+          className="btn btn-info"
+          onClick={() =>
+            history.push(`/observations/${observation.observation_id}/edit`)
+          }
+        >
+          <i className="fa-regular fa-pen-to-square"></i>
+        </button>
+        <button
+          type="button"
+          className="btn btn-danger ml-2"
+          onClick={() => deleteHandler(observation.observation_id)}
+        >
+          <i className="fa-regular fa-trash-can"></i>
+        </button>
+      </td>
+    </tr >
   ));
-
 
   return (
     <main>
@@ -33,11 +71,13 @@ function Home() {
       <table className="table">
         <thead>
           <tr>
-            <th scope="col">ID</th>
+            <th scope="col">#</th>
             <th scope="col">Latitude</th>
             <th scope="col">Longitude</th>
             <th scope="col">Sky Condition</th>
             <th scope="col">Created</th>
+            <th scope="col">Air Temperature</th>
+            <th scope="col">Action</th>
           </tr>
         </thead>
         <tbody>
@@ -49,6 +89,3 @@ function Home() {
 }
 
 export default Home;
-
-
-
